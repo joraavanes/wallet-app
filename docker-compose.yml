@@ -1,0 +1,24 @@
+services:
+  wallet-app:
+    build: 
+      context: .
+      dockerfile: ./Dockerfile
+    command: npm run start:dev -- wallet-app
+    ports:
+      - 3000:3000
+    depends_on:
+      - nats
+      - transactions-service
+    environment:
+      - NATS_URL=nats://nats:4222
+  transactions-service:
+    build: 
+      context: .
+      dockerfile: ./Dockerfile
+    command: npm run start:dev -- transactions-service
+    depends_on:
+      - nats
+    environment:
+      - NATS_URL=nats://nats:4222
+  nats:
+   image: nats:2.2.2-alpine
