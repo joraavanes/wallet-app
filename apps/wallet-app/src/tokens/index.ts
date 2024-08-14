@@ -1,0 +1,1 @@
+export const TRANSACTIONS_SERVICE = Symbol('transactions-service');
