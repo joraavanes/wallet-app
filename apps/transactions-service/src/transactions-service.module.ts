@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { TransactionsServiceController } from './transactions-service.controller';
 import { TransactionsServiceService } from './transactions-service.service';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { Transaction, User } from './entities';
 
 @Module({
   imports: [
@@ -12,9 +13,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       port: +process.env.POSTGRES_PORT,
+      entities: [User, Transaction],
       autoLoadEntities: true,
       synchronize: true
     }),
+    TypeOrmModule.forFeature([User, Transaction])
   ],
   controllers: [TransactionsServiceController],
   providers: [TransactionsServiceService],
