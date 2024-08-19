@@ -56,6 +56,20 @@ describe('TransactionsService', () => {
     service = module.get<TransactionsService>(TransactionsService);
   });
 
+  it('should return user balance successfully', async () => {
+    const result = await service.balance(1);
+
+    expect(result).toBeDefined();
+  });
+
+  it('should fail to return user balance', async () => {
+    try {
+      await service.balance(4);
+    } catch (error) {
+      expect(error.message).toBe('User not found');
+    }
+  });
+
   it('should successfully add to the current balance', async () => {
     const result = await service.transfer(1, 100);
 
