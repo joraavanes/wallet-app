@@ -1,12 +1,28 @@
-import { Controller, Get } from '@nestjs/common';
-import { TransactionsServiceService } from './transactions-service.service';
+import { Controller } from '@nestjs/common';
+import { MessagePattern, Payload } from '@nestjs/microservices';
+import { TransactionsService } from './transactions-service.service';
 
 @Controller()
 export class TransactionsServiceController {
-  constructor(private readonly transactionsServiceService: TransactionsServiceService) {}
+  constructor(private readonly transactionsService: TransactionsService) { }
 
-  @Get()
-  getHello(): string {
-    return this.transactionsServiceService.getHello();
+  @MessagePattern("transactionsService-balance")
+  async balance(@Payload() userId: number) {
+    try {
+      const payload = await this.transactionsService.balance(userId);
+      return payload;
+    } catch (error) {
+      return { error: error.message }
+    }
+  }
+
+  @MessagePattern("transactionsService-transfer")
+  async money(@Payload() transferMoney: any) {
+    try {
+      const payload = await this.transactionsService.transfer(transferMoney.userId, transferMoney.amount);
+      return payload;
+    } catch (error) {
+      return { error: error.message }
+    }
   }
 }

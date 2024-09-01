@@ -1,11 +1,27 @@
-import { Controller, Get } from '@nestjs/common';
+import { lastValueFrom } from 'rxjs';
+import { ClientProxy } from '@nestjs/microservices';
+import { Body, Controller, Get, Inject, Param, Post } from '@nestjs/common';
+import { TRANSACTIONS_SERVICE } from './tokens';
 
 @Controller()
 export class AppController {
-  constructor() { }
+  constructor(
+    @Inject(TRANSACTIONS_SERVICE) private readonly TransactionsService: ClientProxy
+  ) { }
 
-  @Get()
-  getHello(): string {
-    return null;
+  @Get('/balance/:userId')
+  async balance(@Param("userId") userId: string) {
+    const balance = await lastValueFrom(
+      this.TransactionsService.send('transactionsService-balance', +userId)
+    );
+    return balance;
+  }
+
+  @Post("/money")
+  async money(@Body() body: any) {
+    const transactions = await lastValueFrom(
+      this.TransactionsService.send('transactionsService-transfer', body)
+    );
+    return transactions;
   }
 }
