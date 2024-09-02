@@ -3,6 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { TransactionsServiceController } from './transactions-service.controller';
 import { TransactionsService } from './transactions-service.service';
 import { Transaction, User } from './entities';
+import { UsersService } from './users.service';
 
 @Module({
   imports: [
@@ -13,13 +14,20 @@ import { Transaction, User } from './entities';
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       port: +process.env.POSTGRES_PORT,
-      entities: [User, Transaction],
       autoLoadEntities: true,
       synchronize: true
     }),
     TypeOrmModule.forFeature([User, Transaction])
   ],
   controllers: [TransactionsServiceController],
-  providers: [TransactionsService],
+  providers: [TransactionsService, UsersService],
 })
-export class TransactionsServiceModule { }
+export class TransactionsServiceModule {
+  constructor(
+    private readonly usersService: UsersService
+  ) { }
+
+  onApplicationBootstrap() {
+    this.usersService.seedUsers();
+  }
+}
