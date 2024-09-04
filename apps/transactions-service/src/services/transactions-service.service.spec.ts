@@ -39,6 +39,8 @@ describe('TransactionsService', () => {
   }))
 
   beforeEach(async () => {
+    process.env.MAX_RANDOM_INT = "999999999";
+    
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         TransactionsService,
