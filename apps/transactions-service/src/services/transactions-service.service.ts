@@ -2,8 +2,8 @@ import { randomInt } from 'crypto';
 import { Injectable } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from './entities/user.entity';
-import { Transaction } from './entities/transaction.entity';
+import { User } from '../entities/user.entity';
+import { Transaction } from '../entities/transaction.entity';
 
 @Injectable()
 export class TransactionsService {

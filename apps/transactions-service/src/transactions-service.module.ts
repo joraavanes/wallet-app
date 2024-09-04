@@ -2,10 +2,10 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ScheduleModule } from '@nestjs/schedule';
 import { TransactionsLogger } from './jobs/transaction-logs.job';
-import { TransactionsService } from './transactions-service.service';
+import { TransactionsService } from './services/transactions-service.service';
 import { TransactionsServiceController } from './transactions-service.controller';
+import { UsersService } from './services/users.service';
 import { Transaction, User } from './entities';
-import { UsersService } from './users.service';
 
 @Module({
   imports: [

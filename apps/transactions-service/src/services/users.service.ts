@@ -1,8 +1,8 @@
 import { Logger } from "@nestjs/common";
 import { Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
-import { User } from "./entities";
-import { usersData } from "./Data/users.data";
+import { User } from "../entities";
+import { usersData } from "../Data/users.data";
 
 export class UsersService {
     private readonly logger = new Logger();

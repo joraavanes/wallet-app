@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { TransactionsService } from './transactions-service.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
-import { User } from './entities';
+import { User } from '../entities';
 
 describe('TransactionsService', () => {
   const mockUsersData: User[] = [{
