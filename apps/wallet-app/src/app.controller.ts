@@ -1,6 +1,7 @@
 import { lastValueFrom } from 'rxjs';
 import { ClientProxy } from '@nestjs/microservices';
 import { Body, Controller, Get, Inject, Param, Post } from '@nestjs/common';
+import { CreateTransaction } from '@app/transactions';
 import { TRANSACTIONS_SERVICE } from './tokens';
 
 @Controller()
@@ -18,7 +19,7 @@ export class AppController {
   }
 
   @Post("/money")
-  async money(@Body() body: any) {
+  async money(@Body() body: CreateTransaction) {
     const transactions = await lastValueFrom(
       this.TransactionsService.send('transactionsService-transfer', body)
     );
