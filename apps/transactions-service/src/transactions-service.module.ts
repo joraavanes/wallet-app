@@ -1,7 +1,9 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { TransactionsServiceController } from './transactions-service.controller';
+import { ScheduleModule } from '@nestjs/schedule';
+import { TransactionsLogger } from './jobs/transaction-logs.job';
 import { TransactionsService } from './transactions-service.service';
+import { TransactionsServiceController } from './transactions-service.controller';
 import { Transaction, User } from './entities';
 import { UsersService } from './users.service';
 
@@ -17,10 +19,11 @@ import { UsersService } from './users.service';
       autoLoadEntities: true,
       synchronize: true
     }),
-    TypeOrmModule.forFeature([User, Transaction])
+    TypeOrmModule.forFeature([User, Transaction]),
+    ScheduleModule.forRoot()
   ],
   controllers: [TransactionsServiceController],
-  providers: [TransactionsService, UsersService],
+  providers: [TransactionsService, UsersService, TransactionsLogger],
 })
 export class TransactionsServiceModule {
   constructor(
