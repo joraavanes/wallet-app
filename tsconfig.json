@@ -17,6 +17,13 @@
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
-    "paths": {}
+    "paths": {
+      "@app/transactions": [
+        "libs/transactions/src"
+      ],
+      "@app/transactions/*": [
+        "libs/transactions/src/*"
+      ]
+    }
   }
 }
