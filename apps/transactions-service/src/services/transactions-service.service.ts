@@ -38,7 +38,7 @@ export class TransactionsService {
 
       const transaction = new Transaction();
       transaction.amount = amount;
-      transaction.referenceId = randomInt(99999999);
+      transaction.referenceId = randomInt(+process.env.MAX_RANDOM_INT);
       transaction.userId = user;
 
       user.balance += amount;
